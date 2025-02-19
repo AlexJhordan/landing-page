@@ -1,18 +1,20 @@
-import type { ModalProps } from '@/types/ui'
-import { getModalVars, modal } from '@/utils/uiFunctions'
-import { tv } from 'tailwind-variants'
+import { tv, type VariantProps } from 'tailwind-variants'
 
 export const ModalVars = tv({
-  base: 'bg-transparent backdrop:bg-slate-800/50',
+  base: `bg-transparent backdrop:bg-overlay`,
   variants: {
     variant: {
-      'input-text': '',
+      top: `my-0 top-4`,
     },
   },
 })
 
-export const Modal = ({ children, className, variant, ...props }: ModalProps) => {
-  const classes = getModalVars(variant, className)
+export type ModalProps = React.ComponentPropsWithRef<'dialog'> & VariantProps<typeof ModalVars>
 
-  return modal({ className: classes, children, ...props })
+export const Modal = ({ children, variant, className, ...props }: ModalProps) => {
+  return (
+    <dialog {...props} className={ModalVars({ variant, className })}>
+      {children}
+    </dialog>
+  )
 }

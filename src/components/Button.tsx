@@ -1,7 +1,5 @@
-import type { ButtonProps } from '@/types/ui'
-import { button, childWithButtonProps, getButtonVars } from '@/utils/uiFunctions'
-import { forwardRef } from 'react'
-import { tv } from 'tailwind-variants'
+import { forwardButtonProps, getButtonVars } from '@/utils/ui'
+import { tv, type VariantProps } from 'tailwind-variants'
 
 export const ButtonVars = tv({
   base: 'py-2 px-4 flex items-center gap-1 hover:cursor-pointer rounded-full transition duration-200 ease-in-out hover:brightness-90',
@@ -21,14 +19,19 @@ export const ButtonVars = tv({
     variant: 'default',
   },
 })
-type ButtonTypes = ButtonProps & { asChild?: boolean }
-
-export const Button = forwardRef<HTMLButtonElement, ButtonTypes>(
-  ({ children, variant, asChild, className, text, ...props }, ref) => {
-    const classes = getButtonVars(variant, className)
-
-    if (asChild) return childWithButtonProps({ children, className: classes, ref })
-
-    return button({ children, className: classes, text, ...props })
+export type ButtonProps = React.ComponentPropsWithRef<'button'> &
+  VariantProps<typeof ButtonVars> & {
+    text?: string
+    asChild?: boolean
   }
-)
+export const Button = ({ asChild, ...props }: ButtonProps) => {
+  if (asChild) return forwardButtonProps(props)
+
+  return (
+    <button {...props} className={getButtonVars(props)}>
+      {props.text}
+      {props.children}
+    </button>
+  )
+}
+ 

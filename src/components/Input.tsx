@@ -1,24 +1,36 @@
-'use client'
-import type { InputProps } from '@/types/ui'
-import { getInputVars, input, isValidTextInputType, textInput } from '@/utils/uiFunctions'
-import { tv } from 'tailwind-variants'
+import { getInputVars, getWrapperVars, renderIcon } from '@/utils/ui'
+import { tv, type VariantProps } from 'tailwind-variants'
 
 export const InputVars = tv({
-  base: 'outline-none rounded-full py-2 px-5 transition no-search-icon',
+  base: ``,
   variants: {
-    variant: {
-      text: 'border-2 border-border focus:border-border-focus',
+    input: {
+      form: `outline-none rounded-full py-2 px-5 transition no-search-icon peer w-full h-full border-2 border-border focus:border-border-focus`,
     },
-  },
-  defaultVariants: {
-    variant: 'text',
+    icon: {
+      form: `absolute transition peer-focus:text-cta`,
+    },
+    wrapper: {
+      form: `relative flex items-center`,
+    },
   },
 })
 
-export const Input = ({ children, type, className, variant, ...props }: InputProps) => {
-  const classes = getInputVars(variant, className)
+export type InputProps = Required<Pick<React.ComponentPropsWithRef<'input'>, 'type'>> &
+  Omit<React.ComponentPropsWithRef<'input'>, 'type'> &
+  VariantProps<typeof InputVars> & {
+    wrapperClassName?: string
+  }
 
-  if (isValidTextInputType(type)) return textInput({ children, type, className: classes, ...props })
+export const Input = (props: InputProps) => {
+  const inputElement = <input className={getInputVars(props)} />
 
-  return input({ type, className: classes, ...props })
+  if (props.children)
+    return (
+      <div className={getWrapperVars(props)}>
+        {inputElement}
+        {renderIcon(props)}
+      </div>
+    )
+  return inputElement
 }
