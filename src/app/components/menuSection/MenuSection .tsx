@@ -62,7 +62,7 @@ export const MenuSection = () => {
   if (error) return <p>Erro: {error}</p>
 
   return (
-    <section className="grid lg:grid-cols-[auto_1fr]  lg:*:nth-1:col-span-3">
+    <section className="grid lg:grid-cols-[auto_1fr] lg:*:nth-1:col-span-3">
       <header className="flex justify-between">
         <div>
           <P variant="highlight" size="xs">
@@ -99,11 +99,11 @@ export const MenuSection = () => {
         </SideNavContent>
       </SideNavWrapper>
 
-      <div className="flex gap-4">
+      <div className="flex h-[200px] w-auto gap-4 lg:ml-4 overflow-x-auto">
         {loading ? (
           <p className="m-auto">Carregando...</p>
         ) : (
-          filterByCategory(isSelected).map((item) => <MenuCard key={item.id} item={item} />)
+          filterByCategory(isSelected).map((item) => <MenuCard key={`card-${item.id}`} item={item} />)
         )}
       </div>
     </section>
@@ -111,9 +111,9 @@ export const MenuSection = () => {
 }
 
 const MenuCard = ({ item }: { item: GetMenu }) => (
-  <article className="relative aspect-square rounded-4xl overflow-hidden">
+  <article className="relative size-80 aspect-square rounded-4xl overflow-hidden">
     <div className="absolute inset-0 *:object-cover *:w-full *:h-full -z-10 after:absolute after:inset-0 after:bg-linear-to-t after:from-black after:to-transparent after:to-50%">
-      <Image src={item.img.src} width={200} height={200} alt={item.img.alt} />
+      <Image src={item.img.src} width={500} height={500} alt={item.img.alt} />
     </div>
     <div className="absolute bottom-0 p-2">
       <p>Nome: {item.name}</p>
