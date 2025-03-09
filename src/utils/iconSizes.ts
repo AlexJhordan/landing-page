@@ -1,4 +1,4 @@
-export const iconSm = 20;
-export const iconMd = 25;
-export const iconLg = 40;
-export const iconXl = 70;
+export const iconXs = 12
+export const iconSm = 14
+export const iconLg = 20
+export const iconXl = 28

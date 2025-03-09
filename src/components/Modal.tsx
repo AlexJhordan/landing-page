@@ -1,6 +1,6 @@
 import { tv, type VariantProps } from 'tailwind-variants'
 
-export const ModalVars = tv({
+const modalVars = tv({
   base: `bg-transparent backdrop:bg-overlay`,
   variants: {
     variant: {
@@ -9,11 +9,11 @@ export const ModalVars = tv({
   },
 })
 
-export type ModalProps = React.ComponentPropsWithRef<'dialog'> & VariantProps<typeof ModalVars>
+export type ModalProps = React.ComponentPropsWithRef<'dialog'> & VariantProps<typeof modalVars>
 
 export const Modal = ({ children, variant, className, ...props }: ModalProps) => {
   return (
-    <dialog {...props} className={ModalVars({ variant, className })}>
+    <dialog {...props} className={modalVars({ variant, className })}>
       {children}
     </dialog>
   )

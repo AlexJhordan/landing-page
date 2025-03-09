@@ -1,7 +1,8 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { poppins, corugette, sriracha } from './fonts'
-import { Header } from './components/Header'
+import { Header } from './components/header/Header'
+import { Footer } from './components/footer/Footer'
 
 export const metadata: Metadata = {
   title: 'Foodeli - Landing Page',
@@ -15,13 +16,11 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="pt-br" className={fonts}>
-      <head>
-        <>{/* <script crossOrigin="anonymous" src="//unpkg.com/react-scan/dist/auto.global.js" /> */}</>
-      </head>
-      <body className={`light flex flex-col items-start gap-4 p-4 sm:px-[5%]`}>
+    <html lang="pt-br" className={`${fonts}`}>
+      <body className="flex flex-col bg-background text-text items-start gap-4 p-4 sm:px-[5%]">
         <Header />
         {children}
+        <Footer />
       </body>
     </html>
   )

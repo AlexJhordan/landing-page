@@ -12,12 +12,12 @@ const dropdown = tv({
 })
 export const { wrapper, overlay, content, item, subContent } = dropdown()
 
-export type DropdownProps<T extends React.ElementType> = {
+type DropdownProps<T extends React.ElementType> = {
   as?: T
 } & React.ComponentPropsWithRef<T>
 
 // Trigger
-export type RequiredKey<T, K extends keyof T> = Required<Pick<T, K>> & Omit<T, K>
+type RequiredKey<T, K extends keyof T> = Required<Pick<T, K>> & Omit<T, K>
 const DropdownTrigger = ({ children, ...props }: RequiredKey<React.ComponentProps<'div'>, 'children'>) => {
   const isValidChild = React.isValidElement(children)
 

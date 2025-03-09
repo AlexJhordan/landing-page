@@ -35,7 +35,15 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
-## Icons Libs
+## Ilustrations
 
-- Ionicons
-- Heroicons
+- (https://storyset.com/business)
+
+## Icon Libraries
+
+- **Ionicons** – MIT License  
+- **Heroicons** – MIT License  
+- **Game Icons** by Lorc, Delapouite & Contributors, licensed under [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/).  
+- **Font Awesome**, licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).  
+- **Material Design Icons**, licensed under [Apache License 2.0](https://opensource.org/licenses/Apache-2.0).  
+- **Lucide**, licensed under [ISC License](https://github.com/lucide-icons/lucide/blob/main/LICENSE).  
