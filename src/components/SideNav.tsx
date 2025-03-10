@@ -6,7 +6,7 @@ const sideNav = tv({
     wrapper: `grid gap-4 my-4`,
     header: `flex justify-between`,
     content: `flex lg:flex-col gap-2 overflow-x-auto`,
-    item: `flex items-center gap-2 w-full`,
+    item: `flex items-center gap-2 shrink-0`,
   },
 })
 const { wrapper, header, content, item } = sideNav()

@@ -99,7 +99,7 @@ export const MenuSection = () => {
         </SideNavContent>
       </SideNavWrapper>
 
-      <div className="flex h-[200px] w-auto gap-4 lg:ml-4 overflow-x-auto">
+      <div className="inline-flex gap-4 lg:ml-4 overflow-x-auto">
         {loading ? (
           <p className="m-auto">Carregando...</p>
         ) : (
@@ -111,7 +111,7 @@ export const MenuSection = () => {
 }
 
 const MenuCard = ({ item }: { item: GetMenu }) => (
-  <article className="relative size-80 aspect-square rounded-4xl overflow-hidden">
+  <article className="shrink-0 relative h-[200px] w-[200px] aspect-square rounded-4xl overflow-hidden">
     <div className="absolute inset-0 *:object-cover *:w-full *:h-full -z-10 after:absolute after:inset-0 after:bg-linear-to-t after:from-black after:to-transparent after:to-50%">
       <Image src={item.img.src} width={500} height={500} alt={item.img.alt} />
     </div>
