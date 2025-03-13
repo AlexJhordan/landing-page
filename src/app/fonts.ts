@@ -1,20 +1,22 @@
 import { Poppins, Courgette, Sriracha } from 'next/font/google'
 
-export const poppins = Poppins({
+const poppins = Poppins({
   weight: ['400', '500', '600', '700'],
   display: 'swap',
   subsets: ['latin'],
   variable: '--font-poppins',
 })
-export const corugette = Courgette({
+const corugette = Courgette({
   weight: ['400'],
   display: 'swap',
   subsets: ['latin'],
   variable: '--font-corugette',
 })
-export const sriracha = Sriracha({
+const sriracha = Sriracha({
   weight: ['400'],
   display: 'swap',
   subsets: ['latin'],
   variable: '--font-sriracha',
 })
+
+export const fonts = [poppins.variable, corugette.variable, sriracha.variable].join(' ')
