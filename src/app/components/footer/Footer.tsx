@@ -1,6 +1,7 @@
 import { H3, P } from "@/components/Typography"
-import { Button, Link } from "@/components/Button"
-import { FaInstagram, FaXTwitter, FaFacebookF, FaPaperPlane } from "react-icons/fa6"
+import { Link } from "@/components/Button"
+import { FaInstagram, FaXTwitter, FaFacebookF } from "react-icons/fa6"
+// import { FaInstagram, FaXTwitter, FaFacebookF, FaPaperPlane } from "react-icons/fa6"
 import { Brand } from "../header/Header"
 import { Input } from "@/components/Input"
 
