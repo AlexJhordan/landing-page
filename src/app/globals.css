@@ -1,26 +1,26 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
-/* @custom-variant dark (&:is(.dark *)); */
+@custom-variant dark (&:is(.dark *));
 
-@theme {
+@theme inline {
   --breakpoint-xs: 375px;
+
+  --color-background: var(--background);
+  --color-card: var(--card);
+  --color-focus: var(--focus);
+  --color-text: var(--text);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-inverted: var(--text-inverted);
+  --color-cta: var(--cta);
+  --color-cta-secondary: var(--cta-secondary);
+  --color-cta-active: var(--cta-active);
 
   --font-poppins: var(--font-poppins);
   --font-corugette: var(--font-corugette);
   --font-sriracha: var(--font-sriracha);
 
-  --color-background: var(--background);
-  --color-background-inverted: var(--background-inverted);
-  --color-card: var(--card);
-  --color-text: var(--text);
-  --color-text-secondary: var(--text-secondary);
-  --color-text-inverted: var(--text-inverted);
-  --color-text-cta: var(--text-cta);
-
-  --color-cta: var(--cta);
-  --color-cta-secondary: var(--cta-secondary);
-
-  --color-overlay: rgb(0, 0, 0, 0.5);
+  --animate-fade-in: fade-in 0.1s ease-in;
+  --animate-fade-out: fade-out 0.1s ease-in;
 }
 @layer base {
   *,
@@ -31,60 +31,68 @@
     border-color: var(--color-gray-200, currentColor);
   }
   body {
-    @apply font-poppins;
+    @apply font-poppins text-text;
   }
 }
 @layer components {
-  .no-search-icon[type='search']::-webkit-search-cancel-button,
-  .no-search-icon[type='search']::-webkit-search-decoration,
-  .no-search-icon[type='search']::-webkit-search-results-button,
-  .no-search-icon[type='search']::-webkit-search-results-decoration {
-    display: none;
-  }
-  .no-search-icon[type='search'] {
-    -webkit-appearance: none; /* Remove a aparência do ícone no Safari e Chrome */
-    -moz-appearance: textfield; /* Remove a aparência no Firefox */
-    appearance: textfield; /* Para navegadores modernos */
-  }
   .avatar {
     @apply rounded-full object-cover aspect-square w-10 h-10;
   }
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      scale: 98%;
+    }
+    to {
+      opacity: 1;
+      scale: 100%;
+    }
+  }
+  @keyframes fade-out {
+    from {
+      opacity: 1;
+      scale: 100%;
+    }
+    to {
+      opacity: 0;
+      scale: 98%;
+    }
+  }
 }
 :root {
-  --cta: rgb(235, 0, 41);
-  --cta-secondary: rgb(242, 201, 76);
-
-  --text: rgb(0, 0, 0);
-  --text-secondary: rgb(115, 115, 115);
-  --text-inverted: rgb(255, 255, 255);
-  --text-cta: rgb(255, 255, 255);
-  --background: rgb(255, 255, 255);
-  --background-inverted: rgb(2, 8, 23);
-  --card: rgb(255, 255, 255);
+  --background: hsl(200, 100%, 97%);
+  --card: hsl(300, 5%, 85%);
+  --focus: hsl(300, 5%, 50%);
+  --text: hsl(0, 0%, 5%);
+  --text-secondary: hsl(0, 0%, 60%);
+  --text-inverted: hsl(0, 0%, 95%);
+  --cta: hsl(350, 100%, 45%);
+  --cta-secondary: hsl(45, 84%, 63%);
+  --cta-active: hsl(350, 100%, 35%);
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    --text: rgb(255, 255, 255);
-    --text-secondary: rgb(172, 172, 172);
-    --text-inverted: rgb(0, 0, 0);
-    --background: rgb(2, 8, 23);
-    --background-inverted: rgb(255, 255, 255);
-    --card: rgb(6, 21, 50);
+    --background: hsl(280, 80%, 3%);
+    --card: hsl(300, 15%, 15%);
+    --focus: hsl(300, 15%, 20%);
+    --text: hsl(0, 0%, 95%);
+    --text-secondary: hsl(0, 0%, 60%);
+    --text-inverted: hsl(0, 0%, 5%);
   }
 }
 .light {
-  --text: rgb(0, 0, 0);
-  --text-secondary: rgb(115, 115, 115);
-  --text-inverted: rgb(255, 255, 255);
-  --background: rgb(255, 255, 255);
-  --background-inverted: rgb(2, 8, 23);
-  --card: rgb(255, 255, 255);
+  --background: hsl(200, 100%, 97%);
+  --card: hsl(300, 5%, 85%);
+  --focus: hsl(300, 5%, 50%);
+  --text: hsl(0, 0%, 5%);
+  --text-secondary: hsl(0, 0%, 60%);
+  --text-inverted: hsl(0, 0%, 95%);
 }
 .dark {
-  --text: rgb(255, 255, 255);
-  --text-secondary: rgb(172, 172, 172);
-  --text-inverted: rgb(0, 0, 0);
-  --background: rgb(2, 8, 23);
-  --background-inverted: rgb(255, 255, 255);
-  --card: rgb(6, 21, 50);
+  --background: hsl(280, 80%, 3%);
+  --card: hsl(300, 15%, 15%);
+  --focus: hsl(300, 15%, 20%);
+  --text: hsl(0, 0%, 95%);
+  --text-secondary: hsl(0, 0%, 60%);
+  --text-inverted: hsl(0, 0%, 5%);
 }

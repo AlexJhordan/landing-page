@@ -1,74 +1,91 @@
-import React from 'react'
-import { tv, type VariantProps } from 'tailwind-variants'
+"use client"
+
+import React from "react"
+import { cn } from "@/utils/cn"
+import { tv, type VariantProps } from "tailwind-variants"
 
 export const buttonVars = tv({
-  base: `inline-flex items-center justify-center py-2 px-4 -outline-offset-2 w-fit gap-2 hover:cursor-pointer rounded-full transition duration-200 *:transition *:duration-200 `,
+  base: "flex items-center justify-center py-2 px-5 outline-none gap-2 rounded-full hover:cursor-pointer transition duration-200",
   variants: {
     variant: {
-      primary: `bg-cta text-text-cta hover:brightness-85`,
-      secondary: `bg-cta-secondary text-text-cta`,
-      soft: 'bg-cta/10 hover:opacity-90 text-cta font-semibold',
-      minimal: `p-0 font-semibold hover:brightness-85 rounded-none outline-offset-3`,
-      success: ``,
-      destructive: 'bg-destructive text-destructive-foreground shadow-xs hover:bg-destructive/90',
-      outline: 'border border-input bg-background shadow-xs hover:bg-accent hover:text-accent-foreground',
-      ghost: 'text-text hover:bg-black/10 hover:text-text/85',
-      link: `p-0 rounded-none underline-offset-4 hover:underline outline-offset-2`,
+      primary: "bg-cta text-text hover:bg-text/95 hover:text-cta focus:bg-text/95 focus:text-cta",
+      secondary: "bg-cta-secondary text-text-cta",
+      ghost: "hover:bg-focus focus:bg-focus",
+      link: "underline-offset-4 hover:underline focus:bg-focus",
+      scale: "hover:scale-110 hover:text-cta focus:bg-focus",
     },
     size: {
-      auto: `p-0`,
-      sm: `py-1 px-2`,
-      lg: `py-3 px-5`,
+      sm: "text-sm [&>svg]:size-4",
+      md: "text-base [&>svg]:size-4",
+      lg: "text-lg [&>svg]:size-5",
+      "3xl": "text-3xl [&>svg]:size-8",
     },
-    adjust: {
-      square: `aspect-square p-2`,
+    icon: {
+      true: "p-3 rounded-full aspect-square",
+      false: "",
     },
   },
   defaultVariants: {
-    variant: 'primary',
+    variant: "primary",
+    size: "md",
+    icon: false,
   },
 })
 
-type ButtonProps = React.ComponentPropsWithRef<'button'> &
-  VariantProps<typeof buttonVars> & {
-    asChild?: boolean
-  }
-export const Button = ({ asChild, ...props }: ButtonProps) => {
-  if (asChild) return forwardButtonProps(props)
+type HTMlValidTags = "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "div" | "a" | "nav" | "span" | "li" | "ul" | "button"
 
-  return (
-    <button {...props} className={buttonVars(props)}>
-      {props.children}
-    </button>
+type ButtonProps<T extends HTMlValidTags> = React.ComponentProps<T> & {
+  asChild?: boolean
+  as?: T
+} & VariantProps<typeof buttonVars>
+
+export const Button = <T extends HTMlValidTags = "button">(props: ButtonProps<T>) => {
+  const { className, variant, size, icon, ...otherProps } = props
+  const { as, asChild, children, ...rest } = otherProps
+  const variants = { icon, variant, size }
+
+  if (as && React.isValidElement(children)) {
+    return React.createElement(
+      as,
+      {
+        className: cn(buttonVars({ className, ...variants })),
+        ...rest,
+      },
+      children
+    )
+  }
+
+  if (asChild && React.isValidElement(children)) {
+    return React.cloneElement(children, {
+      className: cn(
+        buttonVars({
+          className: cn(className, (children as React.ReactElement<{ className?: string }>).props.className),
+          ...variants,
+        })
+      ),
+      ...rest,
+    })
+  }
+
+  return React.createElement(
+    "button",
+    {
+      className: cn(buttonVars({ className, ...variants })),
+      ...rest,
+    },
+    children
   )
 }
 
-type LinkProps = React.ComponentPropsWithRef<'a'> & { variant?: keyof typeof buttonVars.variants.variant }
-export const Link = ({ children, href = '#', variant = 'link', ...props }: LinkProps) => (
-  <Button asChild variant={variant}>
-    <a {...props} href={href}>
-      {children}
-    </a>
-  </Button>
-)
+export const Link = (props: React.ComponentProps<"a"> & VariantProps<typeof buttonVars>) => {
+  const { className, variant = "link", size, icon, ...rest } = props
 
-// Functions
-const forwardButtonProps = ({ children, ...props }: ButtonProps) => {
-  const isValidChild = React.isValidElement(children)
+  const variants = { variant, icon, size }
 
-  if (isValidChild) {
-    const childClassName = (children.props as React.HTMLAttributes<HTMLElement>).className
-    const classes = `${props.className || ''} ${childClassName || ''}`
-
-    return React.cloneElement(children, {
-      ...props,
-      ...{
-        className: buttonVars({
-          ...props,
-          className: classes,
-        }),
-      },
-    })
-  }
-  return children
+  return React.createElement("a", {
+    role: "link",
+    tabIndex: 0,
+    className: cn(buttonVars({ className, ...variants })),
+    ...rest,
+  })
 }

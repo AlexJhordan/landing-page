@@ -1,8 +1,8 @@
-import { H3, P } from '@/components/Typography'
-import { Brand } from '../header/components/Brand'
-import { FormInput } from '@/components/Input'
-import { Button, Link } from '@/components/Button'
-import { FaInstagram, FaXTwitter, FaFacebookF, FaPaperPlane } from 'react-icons/fa6'
+import { H3, P } from "@/components/Typography"
+import { Button, Link } from "@/components/Button"
+import { FaInstagram, FaXTwitter, FaFacebookF, FaPaperPlane } from "react-icons/fa6"
+import { Brand } from "../header/Header"
+import { Input } from "@/components/Input"
 
 export const Footer = () => {
   return (
@@ -11,13 +11,13 @@ export const Footer = () => {
         <Brand />
         <P>Nosso trabalho é encher sua barriga com comida deliciosa, com entrega rápida e gratuita!</P>
         <div className="flex gap-4 text-cta">
-          <Link variant="minimal" target="_blank" href="https://www.instagram.com">
+          <Link target="_blank" href="https://www.instagram.com">
             <FaInstagram />
           </Link>
-          <Link variant="minimal" target="_blank" href="https://www.facebook.com">
+          <Link target="_blank" href="https://www.facebook.com">
             <FaFacebookF />
           </Link>
-          <Link variant="minimal" target="_blank" href="https://x.com">
+          <Link target="_blank" href="https://x.com">
             <FaXTwitter />
           </Link>
         </div>
@@ -86,11 +86,9 @@ export const Footer = () => {
           <p>Dúvidas ou feedback?</p>
           <p>Adoraríamos ouvir você</p>
           <form>
-            <FormInput type="email" placeholder="Sua Mensagem">
-              <Button variant="minimal" aria-label="Enviar mensagem">
-                <FaPaperPlane />
-              </Button>
-            </FormInput>
+            <Input type="form" placeholder="Sua Mensagem">
+              {/* <FaPaperPlane aria-label="Enviar mensagem" /> */}
+            </Input>
           </form>
         </div>
       </nav>
