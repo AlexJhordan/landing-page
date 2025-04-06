@@ -25,8 +25,8 @@ export const LeftSide = () => {
       <div className="flex gap-4 mx-auto lg:mx-0">
         <Button>Começar</Button>
 
-        <Button className="text-text rounded-full pr-2 outline-offset-0" variant="minimal">
-          <Button asChild variant="secondary" adjust="square">
+        <Button className="text-text rounded-full pr-2 outline-offset-0" >
+          <Button asChild variant="secondary" >
             <span>
               <IoPlay />
             </span>
