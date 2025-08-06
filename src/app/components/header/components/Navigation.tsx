@@ -1,76 +1,173 @@
-'use client'
-import { useRef } from 'react'
-import { Button } from '@/components/Button'
-import { IoChevronDown, IoMenu } from 'react-icons/io5'
-import { iconLg } from '@/utils/iconSizes'
+"use client"
+import { Button } from "@/components/ui/button"
+import { IoChevronDown, IoMenu } from "react-icons/io5"
 import {
-  DropdownWrapper,
-  DropdownContent,
-  DropdownItem,
-  DropdownSubContent,
-  DropdownTrigger,
-  DropdownOverlay,
-} from '@/components/Dropdown'
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
+
+const navigation = {
+  porqueFoodeli: {
+    label: "Porque Foodeli?",
+    link: "#",
+  },
+  serviços: {
+    label: "Serviços",
+    items: [
+      { label: "Item 1", link: "#" },
+      { label: "Item 2", link: "#" },
+      { label: "Item 3", link: "#" },
+    ],
+  },
+  menu: {
+    label: "Menu",
+    items: [
+      { label: "Item 1", link: "#" },
+      { label: "Item 2", link: "#" },
+      { label: "Item 3", link: "#" },
+    ],
+  },
+  contato: {
+    label: "Contato",
+    link: "#",
+  },
+}
 
 export const Navigation = () => {
-  const wrapperRef = useRef<HTMLElement>(null)
-  const toggleDisplay = () => wrapperRef.current?.classList.toggle('hidden')
+  const isMobile = (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild className="order-3 lg:hidden">
+        <Button variant="ghost" size="icon" className="lg:hidden" aria-label="Abrir navegação">
+          <IoMenu size={24} />
+        </Button>
+      </DropdownMenuTrigger>
+
+      <DropdownMenuContent align="end" className="flex flex-col gap-1 scrollbar-hidden">
+        <Button asChild variant="ghost">
+          <a href={navigation.porqueFoodeli.link}>{navigation.porqueFoodeli.label}</a>
+        </Button>
+
+        <div onClick={(e) => e.stopPropagation()} onMouseDown={(e) => e.preventDefault()}>
+          <Accordion type="single" collapsible>
+            <AccordionItem value="item-1">
+              <AccordionTrigger
+                className="group flex items-center justify-center p-0"
+                chevronDownIcon={false}
+              >
+                <Button variant="ghost" asChild className="w-full gap-1">
+                  <span>
+                    {navigation.serviços.label}
+                    <IoChevronDown className="group-data-[state=open]:rotate-180 transition" />
+                  </span>
+                </Button>
+              </AccordionTrigger>
+              {navigation.serviços.items.map((item, index) => (
+                <AccordionContent key={index} className="flex flex-col">
+                  <Button asChild variant="ghost">
+                    <a href={item.link}>{item.label}</a>
+                  </Button>
+                </AccordionContent>
+              ))}
+            </AccordionItem>
+          </Accordion>
+        </div>
+
+        <div onClick={(e) => e.stopPropagation()} onMouseDown={(e) => e.preventDefault()}>
+          <Accordion type="single" collapsible>
+            <AccordionItem value="item-1">
+              <AccordionTrigger
+                className="group flex items-center justify-center p-0"
+                chevronDownIcon={false}
+              >
+                <Button variant="ghost" asChild className="w-full gap-1">
+                  <span>
+                    {navigation.menu.label}
+                    <IoChevronDown className="group-data-[state=open]:rotate-180 transition" />
+                  </span>
+                </Button>
+              </AccordionTrigger>
+              {navigation.menu.items.map((item, index) => (
+                <AccordionContent key={index} className="flex flex-col">
+                  <Button asChild variant="ghost">
+                    <a href={item.link}>{item.label}</a>
+                  </Button>
+                </AccordionContent>
+              ))}
+            </AccordionItem>
+          </Accordion>
+        </div>
+
+        <Button asChild variant="ghost">
+          <a href={navigation.contato.link}>{navigation.contato.label}</a>
+        </Button>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
+
+  const isDesktop = (
+    <nav className="hidden lg:flex gap-2">
+      <Button asChild variant="ghost">
+        <a href={navigation.porqueFoodeli.link}>{navigation.porqueFoodeli.label}</a>
+      </Button>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild className="group">
+          <Button variant="ghost" aria-label="Abrir navegação">
+            {navigation.serviços.label}
+            <IoChevronDown className="group-data-[state=open]:rotate-180 transition" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent asChild align="center" className="flex flex-col gap-1">
+          <ul>
+            {navigation.serviços.items.map((item, index) => (
+              <DropdownMenuItem asChild key={index}>
+                <Button variant="ghost" asChild>
+                  <a href={item.link}>{item.label}</a>
+                </Button>
+              </DropdownMenuItem>
+            ))}
+          </ul>
+        </DropdownMenuContent>
+      </DropdownMenu>
+
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild className="group">
+          <Button variant="ghost" aria-label="Abrir navegação">
+            {navigation.menu.label}
+            <IoChevronDown className="group-data-[state=open]:rotate-180 transition" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent asChild align="center" className="flex flex-col gap-1">
+          <ul>
+            {navigation.menu.items.map((item, index) => (
+              <DropdownMenuItem asChild key={index}>
+                <Button variant="ghost" asChild>
+                  <a href={item.link}>{item.label}</a>
+                </Button>
+              </DropdownMenuItem>
+            ))}
+          </ul>
+        </DropdownMenuContent>
+      </DropdownMenu>
+
+      <Button asChild variant="ghost">
+        <a href={navigation.contato.link}>{navigation.contato.label}</a>
+      </Button>
+    </nav>
+  )
 
   return (
     <>
-      <DropdownTrigger onClick={toggleDisplay}>
-        <Button variant="minimal" className="lg:hidden order-3 lg:order-none" aria-label="Abrir navegação">
-          <IoMenu size={iconLg} />
-        </Button>
-      </DropdownTrigger>
-      <DropdownWrapper as="nav" ref={wrapperRef}>
-        <DropdownOverlay onClick={toggleDisplay} />
-        <DropdownContent>
-          <LiPorqueFoodeli />
-          <LiServices />
-          <LiMenu />
-          <LiContato />
-        </DropdownContent>
-      </DropdownWrapper>
+      {isMobile}
+      {isDesktop}
     </>
   )
 }
-const LiPorqueFoodeli = () => <DropdownItem className="whitespace-nowrap">Porque Foodeli?</DropdownItem>
-
-const LiServices = () => {
-  const servicesRef = useRef<HTMLUListElement>(null)
-  const toggleDisplay = () => servicesRef.current?.classList.toggle('hidden')
-
-  return (
-    <DropdownItem>
-      <Button aria-haspopup="true" aria-expanded="false" variant="minimal" onClick={toggleDisplay}>
-        Serviços
-        <IoChevronDown />
-      </Button>
-      <DropdownSubContent ref={servicesRef}>
-        <DropdownItem>Item 1</DropdownItem>
-        <DropdownItem>Item 2</DropdownItem>
-        <DropdownItem>Item 3</DropdownItem>
-      </DropdownSubContent>
-    </DropdownItem>
-  )
-}
-const LiMenu = () => {
-  const menuRef = useRef<HTMLUListElement>(null)
-  const toggleDisplay = () => menuRef.current?.classList.toggle('hidden')
-
-  return (
-    <DropdownItem>
-      <Button aria-haspopup="true" aria-expanded="false" variant="minimal" onClick={toggleDisplay}>
-        Menu
-        <IoChevronDown />
-      </Button>
-      <DropdownSubContent ref={menuRef}>
-        <DropdownItem>Item 1</DropdownItem>
-        <DropdownItem>Item 2</DropdownItem>
-        <DropdownItem>Item 3</DropdownItem>
-      </DropdownSubContent>
-    </DropdownItem>
-  )
-}
-const LiContato = () => <DropdownItem>Contact</DropdownItem>

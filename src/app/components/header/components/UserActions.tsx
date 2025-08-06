@@ -1,47 +1,51 @@
-'use client'
-import { IoBagHandle, IoLogIn, IoSearch } from 'react-icons/io5'
-import { iconLg } from '@/utils/iconSizes'
-import { Button } from '@/components/Button'
-import { FormInput } from '@/components/Input'
-import { Modal } from '@/components/Modal'
-import { useRef } from 'react'
+import { IoBagHandle, IoLogIn, IoSearch } from "react-icons/io5"
+import { iconLg } from "@/utils/iconSizes"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { navRoutes } from "@/constants/routes"
+
+import {
+  DialogTitle,
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { ThemeButton } from "./theme"
 
 export const UserActions = () => {
-  const DialogRef = useRef<HTMLDialogElement>(null)
-
-  const ModalToggle = () => DialogRef.current?.showModal()
-
-  const SearchInput = ({ groupClass }: { groupClass?: string }) => (
-    <FormInput type="search" aria-label="Buscar no site" placeholder="Buscar" groupClass={groupClass}>
-      <Button variant="minimal" aria-label="Pesquisar">
-        <IoSearch />
-      </Button>
-    </FormInput>
-  )
   return (
     <div className="flex items-center gap-2 ml-auto lg:ml-0">
-      <Button variant="minimal" onClick={ModalToggle} aria-label="Abrir busca" className="lg:hidden">
-        <IoSearch size={iconLg} />
-      </Button>
+      <Input type="search" placeholder="Buscar" className="hidden lg:flex" />
 
-      <Modal ref={DialogRef} className="lg-hidden w-full" variant="top">
-        <SearchInput />
-      </Modal>
+      <Dialog>
+        <DialogTrigger asChild className="lg:hidden">
+          <Button variant="outline" size="icon">
+            <IoSearch />
+          </Button>
+        </DialogTrigger>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Foodeli</DialogTitle>
+          </DialogHeader>
+          <Input type="search" placeholder="Buscar" />
+        </DialogContent>
+      </Dialog>
 
-      <SearchInput groupClass="hidden lg:flex" />
-
-      <Button asChild variant="minimal" aria-label="Ir para carrinho">
-        <a href="#">
+      <Button asChild variant="outline" size="icon">
+        <a href={navRoutes.cart}>
           <IoBagHandle size={iconLg} />
         </a>
       </Button>
 
-      <Button asChild aria-label="Ir para página de login">
-        <a href="#">
+      <Button asChild>
+        <a href={navRoutes.login}>
           <IoLogIn size={iconLg} />
           Login
         </a>
       </Button>
+
+      <ThemeButton />
     </div>
   )
 }

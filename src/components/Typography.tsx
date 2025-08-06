@@ -1,8 +1,8 @@
-import React from 'react'
-import { tv, VariantProps } from 'tailwind-variants'
+import React from "react"
+import { tv, VariantProps } from "tailwind-variants"
 
 const baseClasses = {
-  highlight: `inline-flex justify-center items-center gap-1 w-fit text-cta`,
+  highlight: `inline-flex justify-center items-center gap-1 w-fit text-primary`,
 }
 const typographyVars = tv({
   variants: {
@@ -10,22 +10,23 @@ const typographyVars = tv({
       title: `font-semibold text-balance`,
       paragraph: `text-pretty`,
       muted: `text-sm text-text-secondary`,
-      highlight: `${baseClasses.highlight} font-semibold uppercase bg-cta/10 py-1 px-2 rounded-full`,
-      'highlight-2': `${baseClasses.highlight} font-corugette`,
+      highlight: `${baseClasses.highlight} font-semibold uppercase bg-primary/10 py-1 px-2 rounded-full`,
+      "highlight-2": `${baseClasses.highlight} font-corugette`,
     },
     size: {
       xs: `text-xs`,
       lg: `text-lg xs:text-xl sm:text-2xl`,
       xl: `text-xl xs:text-2xl sm:text-3xl`,
-      'title-primary': `text-2xl xs:text-4xl sm:text-5xl`,
+      "title-primary": `text-2xl xs:text-4xl sm:text-5xl`,
     },
     adjust: {
-      'align-content': `inline-flex justify-center items-center gap-1 w-fit *:w-fit`,
+      "align-content": `inline-flex justify-center items-center gap-1 w-fit *:w-fit`,
     },
   },
 })
 
-type TypographyProps<T extends React.ElementType> = React.ComponentProps<T> & VariantProps<typeof typographyVars>
+type TypographyProps<T extends React.ElementType> = React.ComponentProps<T> &
+  VariantProps<typeof typographyVars>
 
 type DefaultClasses = {
   variantDefault: keyof typeof typographyVars.variants.variant
@@ -34,7 +35,8 @@ type DefaultClasses = {
 
 const createTypographyElement = <T extends React.ElementType>(element: T) => {
   return function Typography(props: TypographyProps<T>) {
-    const defaultClasses = defaultTypographyVariants[element as keyof typeof defaultTypographyVariants]
+    const defaultClasses =
+      defaultTypographyVariants[element as keyof typeof defaultTypographyVariants]
 
     const classes = generateTypographyClasses(props, defaultClasses)
 
@@ -43,19 +45,19 @@ const createTypographyElement = <T extends React.ElementType>(element: T) => {
 }
 
 const defaultTypographyVariants = {
-  h1: { variantDefault: 'title', sizeDefault: 'title-primary' },
-  h2: { variantDefault: 'title', sizeDefault: 'xl' },
-  h3: { variantDefault: 'title', sizeDefault: 'lg' },
-  p: { variantDefault: 'paragraph' },
-  span: { variantDefault: 'highlight' },
+  h1: { variantDefault: "title", sizeDefault: "title-primary" },
+  h2: { variantDefault: "title", sizeDefault: "xl" },
+  h3: { variantDefault: "title", sizeDefault: "lg" },
+  p: { variantDefault: "paragraph" },
+  span: { variantDefault: "highlight" },
 } satisfies Record<string, DefaultClasses>
 
 // Components
-export const H1 = createTypographyElement('h1')
-export const H2 = createTypographyElement('h2')
-export const H3 = createTypographyElement('h3')
-export const P = createTypographyElement('p')
-export const Span = createTypographyElement('span')
+export const H1 = createTypographyElement("h1")
+export const H2 = createTypographyElement("h2")
+export const H3 = createTypographyElement("h3")
+export const P = createTypographyElement("p")
+export const Span = createTypographyElement("span")
 
 // Functions
 const generateTypographyClasses = <T extends React.ElementType>(
