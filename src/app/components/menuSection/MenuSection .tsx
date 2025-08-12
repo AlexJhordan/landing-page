@@ -1,22 +1,13 @@
 'use client'
-import { Button, Link } from '@/components/Button'
-import { SideNavContent, SideNavItem, SideNavWrapper } from '@/components/SideNav'
-import { H2, P } from '@/components/Typography'
+import { Button } from '@/components/ui/button'
 import { useEffect, useState } from 'react'
-import { FaChevronLeft, FaChevronRight, FaHamburger, FaPizzaSlice } from 'react-icons/fa'
+import { AiOutlineLoading3Quarters } from 'react-icons/ai'
+import { FaHamburger, FaPizzaSlice } from 'react-icons/fa'
 import { GiCupcake } from 'react-icons/gi'
 import { MdLocalDrink, MdRamenDining } from 'react-icons/md'
-import { formatCurrency } from '@/utils/formatCurrency'
-import Image from 'next/image'
-import type { GetMenu } from '@/types/apiTypes'
 
 export const MenuSection = () => {
   const [isSelected, setIsSelected] = useState<string>('Pizza')
-  const [menuData, setMenuData] = useState<GetMenu[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string>()
-
-  const filterByCategory = (category: string) => menuData.filter((item) => item.category === category)
 
   const menuCategories = [
     { icon: <FaPizzaSlice />, text: 'Pizza' },
@@ -28,97 +19,67 @@ export const MenuSection = () => {
 
   useEffect(() => {
     const controller = new AbortController()
-    const { signal } = controller
-
-    const fetchMenu = async () => {
-      try {
-        const response = await fetch('./api/menu', { signal })
-
-        if (!response.ok) throw new Error('Erro ao buscar menu')
-
-        const data = await response.json()
-
-        setMenuData(data)
-      } catch (err) {
-        if (err instanceof Error) {
-          const isAbortError = err.name === 'AbortError'
-
-          if (!isAbortError) {
-            console.error(err.message)
-
-            setError(err.message)
-          }
-        }
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchMenu()
 
     return () => controller.abort()
   }, [])
 
-  if (error) return <p>Erro: {error}</p>
-
   return (
-    <section className="grid lg:grid-cols-[auto_1fr] lg:*:nth-1:col-span-3">
+    <section className="grid lg:grid-cols-[auto_1fr] gap-2 lg:*:nth-1:col-span-3 mb-4">
       <header className="flex justify-between">
         <div>
-          <P variant="highlight" size="xs">
-            Menu
-          </P>
-          <H2>Menu que sempre faz você se apaixonar</H2>
+          <p className="text-primary font-semibold text-xs">Menu</p>
+          <h2 className="text-xl font-semibold">Menu que sempre faz você se apaixonar</h2>
         </div>
-        <div className="hidden lg:block my-auto mx-4 space-x-2">
-          <Button adjust="square" aria-label="Página anterior" variant="ghost">
+        {/* <div className="hidden lg:block my-auto mx-4 space-x-2">
+          <Button variant="ghost">
             <FaChevronLeft />
           </Button>
-          <Button adjust="square" aria-label="Próxima página" variant="ghost">
+          <Button variant="ghost">
             <FaChevronRight />
           </Button>
-        </div>
+        </div> */}
       </header>
 
-      <SideNavWrapper>
-        <SideNavContent>
+      <div className="overflow-x-auto">
+        <div className="flex gap-1 lg:flex-col">
           {menuCategories.map((item) => (
-            <SideNavItem key={item.text}>
+            <div key={item.text}>
               <Button
-                className="lg:justify-start w-full pl-2"
-                variant={isSelected === item.text ? 'primary' : 'ghost'}
+                className="lg:justify-start w-full pl-1 py-5"
+                variant={isSelected === item.text ? 'default' : 'ghost'}
                 onClick={() => setIsSelected(item.text)}
               >
-                <span className={`${isSelected === item.text ? 'bg-background text-text' : ''} rounded-full p-2`}>
+                <span
+                  className={`${
+                    isSelected === item.text ? 'bg-background text-foreground' : ''
+                  } rounded-full p-2`}
+                >
                   {item.icon}
                 </span>
                 {item.text === 'Dryck' ? 'Bebidas' : item.text}
               </Button>
-            </SideNavItem>
+            </div>
           ))}
-        </SideNavContent>
-      </SideNavWrapper>
+        </div>
+      </div>
 
-      <div className="inline-flex gap-4 lg:ml-4 overflow-x-auto">
-        {loading ? (
-          <p className="m-auto">Carregando...</p>
-        ) : (
-          filterByCategory(isSelected).map((item) => <MenuCard key={`card-${item.id}`} item={item} />)
-        )}
+      <div className="inline-flex gap-4 lg:ml-4">
+        {/* <p className="m-auto">Carregando...</p> */}
+        <AiOutlineLoading3Quarters className="animate-spin m-auto size-8" />
       </div>
     </section>
   )
 }
 
-const MenuCard = ({ item }: { item: GetMenu }) => (
-  <article className="shrink-0 relative h-[200px] w-[200px] aspect-square rounded-4xl overflow-hidden">
-    <div className="absolute inset-0 *:object-cover *:w-full *:h-full -z-10 after:absolute after:inset-0 after:bg-linear-to-t after:from-black after:to-transparent after:to-50%">
-      <Image src={item.img.src} width={500} height={500} alt={item.img.alt} />
-    </div>
-    <div className="absolute bottom-0 p-2">
-      <p>Nome: {item.name}</p>
-      <p>Preço: {formatCurrency(item.price)}</p>
-      <Link>Order Now</Link>
-    </div>
-  </article>
-)
+// const MenuCard = ({ item }: { item: {} }) => (
+//   <article className="shrink-0 relative h-[200px] w-[200px] aspect-square rounded-4xl overflow-hidden">
+//     <div className="absolute inset-0 *:object-cover *:w-full *:h-full -z-10 after:absolute after:inset-0 after:bg-linear-to-t after:from-black after:to-transparent after:to-50%">
+//       <Image src={item.img.src} width={500} height={500} alt={item.img.alt} />
+//     </div>
+//     <div className="absolute bottom-0 p-2">
+//       <p>Nome: {item.name}</p>
+//       <p>Preço: {formatCurrency(item.price)}</p>
+//       <Link>Order Now</Link>
+//     </div>
+//   </article>
+// )

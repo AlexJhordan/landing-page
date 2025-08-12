@@ -1,18 +1,8 @@
-'use client'
-import { P, Span } from '@/components/Typography'
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
 import { FaStar } from 'react-icons/fa'
 import { twMerge } from 'tailwind-merge'
 
-interface Data {
-  info: object
-  results: object
-}
-
 export const ReviewStars = ({ className }: { className?: string }) => {
-  const [data, setData] = useState({} as Data)
-
   const images = [
     {
       id: 'img1',
@@ -30,18 +20,6 @@ export const ReviewStars = ({ className }: { className?: string }) => {
       alt: 'Foto de Raoul Droog na Unsplash',
     },
   ]
-  useEffect(() => {
-    let isMounted = true
-    fetch('./api/randomUser')
-      .then((res) => res.json())
-      .then((res) => {
-        if (isMounted) setData(res)
-      })
-    return () => {
-      isMounted = false
-    }
-  }, [])
-  console.log(data.results)
 
   return (
     <article className={twMerge('flex-wrap xs:flex gap-2 mx-auto lg:mx-0', className)}>
@@ -58,14 +36,12 @@ export const ReviewStars = ({ className }: { className?: string }) => {
         ))}
       </div>
       <div>
-        <P className="font-medium">Clientes satisfeitos</P>
-        <P adjust="align-content">
-          <FaStar className="text-cta-secondary" />
+        <p className="font-medium">Clientes satisfeitos</p>
+        <p className="flex items-center gap-0.5">
+          <FaStar className="text-secondary size-3.5" />
           4.8
-          <Span size="xs" variant="muted">
-            (12.5k Revieew)
-          </Span>
-        </P>
+          <span className="text-xs text-muted-foreground">(12.5k Revieew)</span>
+        </p>
       </div>
     </article>
   )
